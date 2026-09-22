@@ -13,17 +13,15 @@ return new class extends Migration
     {
         Schema::create('referral_earnings', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-
-            $table->foreignId('referrer_master_id')->constrained('masters')->cascadeOnDelete();
-            $table->foreignId('referred_master_id')->constrained('masters')->cascadeOnDelete();
-            $table->foreignId('referral_id')->constrained('referrals')->cascadeOnDelete();
-            $table->foreignId('payment_id')->constrained('payments')->cascadeOnDelete();
-
-            $table->unsignedInteger('payment_amount');
-            $table->unsignedInteger('amount');
+            $table->foreignId('referrer_master_id')->constrained('masters');
+            $table->foreignId('referred_master_id')->constrained('masters');
+            $table->foreignId('referral_id')->constrained('referrals');
+            $table->foreignId('payment_id')->constrained('payments');
+            $table->unsignedBigInteger('payment_amount');
+            $table->unsignedBigInteger('amount');
             $table->unsignedInteger('percent');
             $table->string('status')->default('pending');
+            $table->timestamps();
         });
     }
 
@@ -35,4 +33,3 @@ return new class extends Migration
         Schema::dropIfExists('referral_earnings');
     }
 };
-
